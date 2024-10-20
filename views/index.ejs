@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+        .pagination a.active {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        .ellipsis {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Keyword Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Keyword</th>
+                <th>Search Volume</th>
+                <th>Competition</th>
+                <th>Low CPC Bid</th>
+                <th>High CPC Bid</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(function(keyword) { %>
+                <tr>
+                    <td><%= keyword.Keyword %></td>
+                    <td><%= keyword["Search Volume"] %></td>
+                    <td><%= keyword.Competition %></td>
+                    <td><%= keyword["Low CPC Bid"] %></td>
+                    <td><%= keyword["High CPC Bid"] %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+        <% } %>
+
+        <% if (currentPage > 1) { %>
+            <a href="?page=1">1</a>
+        <% } %>
+
+        <% if (currentPage > 2) { %>
+            <span class="ellipsis">...</span>
+        <% } %>
+
+        <% for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) { %>
+            <a href="?page=<%= i %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+        <% } %>
+
+        <% if (currentPage < totalPages - 1) { %>
+            <span class="ellipsis">...</span>
+        <% } %>
+
+        <% if (totalPages > 1) { %>
+            <a href="?page=<%= totalPages %>"><%= totalPages %></a>
+        <% } %>
+
+        <% if (currentPage < totalPages) { %>
+            <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+        <% } %>
+    </div>
+</body>
+</html>
